@@ -31,7 +31,7 @@ cp .env.example .env
 Run the following command to install dependencies via a temporary Docker container (if you don't have PHP/Composer
 installed locally):
 
-##### Linuks:
+##### Linux:
 ```Bash
 docker run --rm \
 -u "$(id -u):$(id -g)" \
