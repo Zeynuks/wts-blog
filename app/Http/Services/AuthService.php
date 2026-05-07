@@ -8,6 +8,8 @@ use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
+    private const string TOKEN_NAME = 'mobile_auth_token';
+
     public function register(array $data): array
     {
         $user = User::create([
@@ -16,7 +18,7 @@ class AuthService
             'password' => Hash::make($data['password'])
         ]);
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $token = $user->createToken(self::TOKEN_NAME)->plainTextToken;
 
         return ['user' => $user, 'token' => $token];
     }
@@ -31,7 +33,7 @@ class AuthService
             ]);
         }
 
-        $token = $user->createToken('myapptoken')->plainTextToken;
+        $token = $user->createToken(self::TOKEN_NAME)->plainTextToken;
 
         return ['user' => $user, 'token' => $token];
     }
