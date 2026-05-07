@@ -68,7 +68,7 @@ docker run --rm `
 Launch the Docker containers:
 
 ```Bash
-bash ./vendor/bin/sail up -d
+./vendor/bin/sail up -d
 ```
 
 #### 6. Application Key & Storage
@@ -76,8 +76,8 @@ bash ./vendor/bin/sail up -d
 Generate the app key and create a symbolic link for the storage:
 
 ```Bash
-bash ./vendor/bin/sail artisan key:generate
-bash ./vendor/bin/sail artisan storage:link
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan storage:link
 ```
 
 #### 7. Database & Seeding
@@ -85,7 +85,7 @@ bash ./vendor/bin/sail artisan storage:link
 Run migrations and seed the database (this will create your Admin User from the .env settings):
 
 ```Bash
-bash ./vendor/bin/sail artisan migrate --seed
+./vendor/bin/sail artisan migrate --seed
 ```
 
 #### 8. API Documentation
@@ -93,7 +93,7 @@ bash ./vendor/bin/sail artisan migrate --seed
 Generate the Swagger/OpenAPI documentation:
 
 ```Bash
-bash ./vendor/bin/sail artisan l5-swagger:generate
+./vendor/bin/sail artisan l5-swagger:generate
 ```
 
 ### Useful Commands
@@ -101,13 +101,13 @@ bash ./vendor/bin/sail artisan l5-swagger:generate
 Stop Sail:
 
 ```Bash 
-bash ./vendor/bin/sail stop 
+./vendor/bin/sail stop 
 ```
 
 Run Tests:
 
 ```Bash 
-bash ./vendor/bin/sail artisan test
+./vendor/bin/sail artisan test
 ```
 
 Access Admin Panel: Open http://localhost/admin
@@ -117,7 +117,7 @@ View API Docs: Open http://localhost/api/documentation
 Publish Assets (Orchid/Packages):
 
 ```Bash
-bash ./vendor/bin/sail artisan vendor:publish --all-assets --force
+./vendor/bin/sail artisan vendor:publish --all-assets --force
 ```
 
 ### Development Notes
