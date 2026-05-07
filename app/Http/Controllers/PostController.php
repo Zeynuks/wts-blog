@@ -110,7 +110,25 @@ class PostController extends Controller
         tags: ["Posts"],
         parameters: [
             new OA\Parameter(name: "limit", in: "query", schema: new OA\Schema(type: "integer", default: 10)),
-            new OA\Parameter(name: "offset", in: "query", schema: new OA\Schema(type: "integer", default: 0))
+            new OA\Parameter(name: "offset", in: "query", schema: new OA\Schema(type: "integer", default: 0)),
+            new OA\Parameter(
+                name: "filter[title]",
+                description: "Поиск по названию",
+                in: "query",
+                schema: new OA\Schema(type: "string")
+            ),
+            new OA\Parameter(
+                name: "filter[created_at][start]",
+                description: "Дата создания ОТ (ГГГГ-ММ-ДД)",
+                in: "query",
+                schema: new OA\Schema(type: "string", format: "date")
+            ),
+            new OA\Parameter(
+                name: "filter[created_at][end]",
+                description: "Дата создания ДО (ГГГГ-ММ-ДД)",
+                in: "query",
+                schema: new OA\Schema(type: "string", format: "date")
+            ),
         ],
         responses: [
             new OA\Response(response: 200, description: "Список ваших постов"),

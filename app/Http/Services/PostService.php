@@ -20,6 +20,7 @@ class PostService
     public function getUserPosts(User $user, int $limit, int $offset): Collection
     {
         return $user->posts()
+            ->filters()
             ->latest()
             ->offset($offset)
             ->limit($limit)
