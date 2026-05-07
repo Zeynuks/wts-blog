@@ -1,58 +1,106 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Deployment Guide
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is built with Laravel 11, Orchid Platform, and utilizes Laravel Sail for a seamless Docker-based
+development environment.
 
-## About Laravel
+### Getting Started
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+#### 1. Prerequisites
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Ensure you have Docker Desktop installed and running on your machine.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### 2. Installation
 
-## Learning Laravel
+Clone the repository and enter the project directory:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```Bash
+git clone https://github.com/Zeynuks/wts-blog
+cd wts-blog
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+#### 3. Environment Setup
 
-## Contributing
+Copy the example environment file. Important: Open .env and set your desired admin credentials.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```Bash
+cp .env.example .env
+```
 
-## Code of Conduct
+#### 4. Composer Install
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Run the following command to install dependencies via a temporary Docker container (if you don't have PHP/Composer
+installed locally):
 
-## Security Vulnerabilities
+```Bash
+docker run --rm \
+-u "$(id -u):$(id -g)" \
+-v "$(pwd):/var/www/html" \
+-w /var/www/html \
+laravelsail/php83-composer:latest \
+composer install --ignore-platform-reqs
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+#### 5. Start Laravel Sail
 
-## License
+Launch the Docker containers:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```Bash
+./vendor/bin/sail up -d
+```
+
+#### 6. Application Key & Storage
+
+Generate the app key and create a symbolic link for the storage:
+
+```Bash
+./vendor/bin/sail artisan key:generate
+./vendor/bin/sail artisan storage:link
+```
+
+#### 7. Database & Seeding
+
+Run migrations and seed the database (this will create your Admin User from the .env settings):
+
+```Bash
+./vendor/bin/sail artisan migrate --seed
+```
+
+#### 8. API Documentation
+
+Generate the Swagger/OpenAPI documentation:
+
+```Bash
+./vendor/bin/sail artisan l5-swagger:generate
+```
+
+### Useful Commands
+
+Stop Sail:
+
+```Bash 
+./vendor/bin/sail stop 
+```
+
+Run Tests:
+
+```Bash 
+./vendor/bin/sail artisan test
+```
+
+Access Admin Panel: Open http://localhost/admin
+
+View API Docs: Open http://localhost/api/documentation
+
+Publish Assets (Orchid/Packages):
+
+```Bash
+./vendor/bin/sail artisan vendor:publish --all-assets --force
+```
+
+### Development Notes
+
+PHP Version: 8.3
+
+Database: MySQL
+
+Tooling: Laravel Sail, Orchid Platform, L5-Swagger
