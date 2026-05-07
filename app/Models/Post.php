@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Orchid\Presenters\PostPresenter;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use OpenApi\Attributes as OA;
@@ -28,7 +29,7 @@ use Orchid\Screen\AsSource;
 )]
 class Post extends Model
 {
-    use AsSource, Filterable, Attachable;
+    use HasFactory, AsSource, Filterable, Attachable;
 
     /**
      * The attributes that are mass assignable.
