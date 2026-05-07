@@ -28,10 +28,22 @@ cp .env.example .env
 
 #### 4. Composer Install
 
-Run the following command to install dependencies via a temporary Docker container (if you don't have PHP/Composer
-installed locally):
+Choose the method that fits your local setup to install the project dependencies:
 
-##### Linux:
+##### Option A: If you have PHP 8.3 and Composer installed locally
+
+This is the fastest method as it uses your local cache:
+
+```Bash
+composer install
+```
+
+##### Option B: If you do NOT have PHP/Composer installed (via Docker)
+
+Run this command to install dependencies using a temporary Docker container:
+
+- **Linux / macOS**:
+
 ```Bash
 docker run --rm \
 -u "$(id -u):$(id -g)" \
@@ -41,7 +53,7 @@ laravelsail/php83-composer:latest \
 composer install --ignore-platform-reqs
 ```
 
-##### Windows
+- **Windows (PowerShell)**:
 
 ```Bash
 docker run --rm `
