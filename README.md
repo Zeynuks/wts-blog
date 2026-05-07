@@ -31,6 +31,7 @@ cp .env.example .env
 Run the following command to install dependencies via a temporary Docker container (if you don't have PHP/Composer
 installed locally):
 
+##### Linuks:
 ```Bash
 docker run --rm \
 -u "$(id -u):$(id -g)" \
@@ -38,6 +39,16 @@ docker run --rm \
 -w /var/www/html \
 laravelsail/php83-composer:latest \
 composer install --ignore-platform-reqs
+```
+
+##### Windows
+
+```Bash
+docker run --rm `
+ -v "${PWD}:/var/www/html" `
+ -w /var/www/html `
+ laravelsail/php83-composer:latest `
+ composer install --ignore-platform-reqs
 ```
 
 #### 5. Start Laravel Sail
